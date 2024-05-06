@@ -23,7 +23,7 @@ const Profiles = () => {
           aria-expanded={open ? 'true' : undefined}
         >
           <Avatar
-            sx={{ width: 34, height: 34 }}
+            sx={{ width: 36, height: 36 }}
             src="https://dungnguyenvan02.github.io/CV/assets/image/avatar.jpg"
             alt="DungNguyen"
           >
