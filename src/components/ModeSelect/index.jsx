@@ -4,16 +4,15 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined'
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness'
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material'
 
-
 const ModeSelect = () => {
   const { mode, setMode } = useColorScheme()
-  const handleChange = (event) => {
-    const selectedMode = event.target.value
+  const handleChange = (e) => {
+    const selectedMode = e.target.value
     setMode(selectedMode)
   }
 
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+    <FormControl size="small" sx={{ minWidth: '120px' }}>
       <InputLabel id="label-select-dark-light-mode">Mode</InputLabel>
       <Select
         labelId="label-select-dark-light-mode"
@@ -22,21 +21,21 @@ const ModeSelect = () => {
         label="Mode"
         onChange={handleChange}
       >
-        <MenuItem value="light" >
+        <MenuItem value="light">
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <LightModeIcon fontSize='small' />
+            <LightModeIcon fontSize="small" />
             Light
           </Box>
         </MenuItem>
-        <MenuItem value="dark" >
+        <MenuItem value="dark">
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <DarkModeOutlinedIcon fontSize='small' />
+            <DarkModeOutlinedIcon fontSize="small" />
             Dark
           </Box>
         </MenuItem>
-        <MenuItem value="system" >
+        <MenuItem value="system">
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <SettingsBrightnessIcon fontSize='small' />
+            <SettingsBrightnessIcon fontSize="small" />
             System
           </Box>
         </MenuItem>
@@ -46,4 +45,3 @@ const ModeSelect = () => {
 }
 
 export default ModeSelect
-
