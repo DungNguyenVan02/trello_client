@@ -7,13 +7,13 @@ import FilterListIcon from '@mui/icons-material/FilterList'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 
 const MENU_STYLES = {
-  color: 'primary.main',
-  bgcolor: 'primary.50',
+  color: '#fff',
+  bgcolor: 'rgba(255, 255, 255, 0.2)',
   border: 'none',
   borderRadius: '5px',
   px: '5px',
-  '& .MuiSvgIcon-root': { color: 'primary.main' },
-  '&:hover': { bgcolor: 'primary.100' }
+  '.MuiSvgIcon-root': { color: '#fff' },
+  '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
 }
 
 const BoardBar = () => {
@@ -27,7 +27,9 @@ const BoardBar = () => {
         justifyContent: 'space-between',
         gap: 2,
         px: 2,
-        overflowX: 'auto'
+        overflowX: 'auto',
+        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
+        borderBottom: '1px solid #fff'
       }}
     >
       <Box sx={{ display: 'flex', gap: 2 }}>
@@ -38,10 +40,14 @@ const BoardBar = () => {
         <Chip clickable icon={<FilterListIcon />} label="Filter" sx={MENU_STYLES} />
       </Box>
       <Box sx={{ display: 'flex', gap: 2 }}>
-        <Button startIcon={<PersonAddIcon />} variant="outlined">
+        <Button
+          startIcon={<PersonAddIcon />}
+          variant="outlined"
+          sx={{ color: '#fff', '&.MuiButton-outlined': { borderColor: '#fff' } }}
+        >
           Invite
         </Button>
-        <AvatarGroup max={7} sx={{ '& .MuiAvatar-root': { width: 34, height: 34, fontSize: '16px' } }}>
+        <AvatarGroup max={7} sx={{ '& .MuiAvatar-root': { width: 34, height: 34, fontSize: '16px', border: 'none' } }}>
           <Tooltip title="User" sx={{ cursor: 'pointer' }}>
             <Avatar alt="User" src="https://dungnguyenvan02.github.io/CV/assets/image/avatar.jpg" />
           </Tooltip>
