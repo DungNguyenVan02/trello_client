@@ -1,6 +1,7 @@
 import { Box, SvgIcon, Typography, Button, TextField, Badge, Tooltip } from '@mui/material'
 import ModeSelect from '~/components/ModeSelect'
 import AppsIcon from '@mui/icons-material/Apps'
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd'
 import { ReactComponent as TrelloIcon } from '~/assets/trello_icon.svg'
 import Workspaces from './Menus/Workspaces'
 import Recent from './Menus/Recent'
@@ -37,7 +38,9 @@ const AppBar = () => {
           <Recent />
           <Starred />
           <Templates />
-          <Button variant="outlined">Create</Button>
+          <Button variant="outlined" startIcon={<LibraryAddIcon />}>
+            Create
+          </Button>
         </Box>
       </Box>
 
