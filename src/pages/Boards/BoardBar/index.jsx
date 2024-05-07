@@ -47,7 +47,19 @@ const BoardBar = () => {
         >
           Invite
         </Button>
-        <AvatarGroup max={7} sx={{ '& .MuiAvatar-root': { width: 34, height: 34, fontSize: '16px', border: 'none' } }}>
+        <AvatarGroup
+          max={7}
+          sx={{
+            '& .MuiAvatar-root': {
+              width: 34,
+              height: 34,
+              fontSize: '16px',
+              border: 'none',
+              color: '#fff',
+              '&:first-of-type': { bgcolor: '#a4b0bes' }
+            }
+          }}
+        >
           <Tooltip title="User" sx={{ cursor: 'pointer' }}>
             <Avatar alt="User" src="https://dungnguyenvan02.github.io/CV/assets/image/avatar.jpg" />
           </Tooltip>
