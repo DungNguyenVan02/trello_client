@@ -5,6 +5,8 @@ import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
 import FilterListIcon from '@mui/icons-material/FilterList'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import PublicIcon from '@mui/icons-material/Public'
+import { capitalizeFirstLetter } from '~/utils/formatter'
 
 const MENU_STYLES = {
   color: '#fff',
@@ -16,7 +18,7 @@ const MENU_STYLES = {
   '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
 }
 
-const BoardBar = () => {
+const BoardBar = ({ board }) => {
   return (
     <Box
       sx={{
@@ -37,8 +39,13 @@ const BoardBar = () => {
         }}
       >
         <Box sx={{ display: 'flex', gap: 2 }}>
-          <Chip clickable icon={<DashboardIcon />} label="Trello dash board" sx={MENU_STYLES} />
-          <Chip clickable icon={<VpnLockIcon />} label="Public/Private Workspace" sx={MENU_STYLES} />
+          <Chip clickable icon={<DashboardIcon />} label={board?.title} sx={MENU_STYLES} />
+          <Chip
+            clickable
+            icon={board?.type === 'public' ? <PublicIcon /> : <VpnLockIcon />}
+            label={capitalizeFirstLetter(board?.type)}
+            sx={MENU_STYLES}
+          />
           <Chip clickable icon={<AddToDriveIcon />} label="Add To Google Driver" sx={MENU_STYLES} />
           <Chip clickable icon={<BoltIcon />} label="Automation" sx={MENU_STYLES} />
           <Chip clickable icon={<FilterListIcon />} label="Filter" sx={MENU_STYLES} />

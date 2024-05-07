@@ -2,7 +2,7 @@ import { Box, Button } from '@mui/material'
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd'
 import Column from './Column/Column'
 
-const ListColumns = () => {
+const ListColumns = ({ columns }) => {
   return (
     <Box
       sx={{
@@ -15,8 +15,9 @@ const ListColumns = () => {
         '&::-webkit-scrollbar-track': { m: 2 }
       }}
     >
-      <Column />
-      <Column />
+      {columns?.map?.((column) => (
+        <Column key={column._id} column={column} />
+      ))}
 
       <Box
         sx={{
