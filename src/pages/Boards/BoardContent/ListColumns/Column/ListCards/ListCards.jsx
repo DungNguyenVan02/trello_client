@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import Card from './Card/Card'
 
-const ListCards = () => {
+const ListCards = ({ cards }) => {
   return (
     <Box
       sx={{
@@ -22,12 +22,9 @@ const ListCards = () => {
         '&::-webkit-scrollbar-thumb': { backgroundColor: '#ced0da', borderRadius: '8px' }
       }}
     >
-      <Card />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
-      <Card temporaryHideMedia />
+      {cards.map((card) => (
+        <Card key={card._id} card={card} />
+      ))}
     </Box>
   )
 }
