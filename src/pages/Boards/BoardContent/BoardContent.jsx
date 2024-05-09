@@ -19,7 +19,8 @@ import {
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
+import { generatePlaceholderCard } from '~/utils/formatter'
 
 const BoardContent = ({ board }) => {
   const [orderedColumns, setOrderColumns] = useState([])
@@ -90,6 +91,13 @@ const BoardContent = ({ board }) => {
       if (nextActiveColumn) {
         //Xóa card từ column cũ
         nextActiveColumn.cards = nextActiveColumn.cards.filter((card) => card._id !== activeDragItemId)
+
+        // Thêm placeholder card giữ chỗ
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+          console.log(nextActiveColumn.cards)
+        }
+
         // Cập nhật lại cardOrderIds
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map((c) => c._id)
       }
@@ -105,9 +113,15 @@ const BoardContent = ({ board }) => {
         }
 
         nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDraggingCardData)
+
+        // Xóa placeholder card giữ chỗ
+        nextOverColumn.cards = nextOverColumn.cards.filter((card) => !card.FE_PlaceholderCard)
+
         // Cập nhật lại cardOrderIds
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map((c) => c._id)
       }
+
+      console.log(nextColumns)
 
       return nextColumns
     })
@@ -226,14 +240,12 @@ const BoardContent = ({ board }) => {
         const checkColumn = orderedColumns.find((column) => column._id === overId)
 
         if (checkColumn) {
-          console.log('overId before: ', overId)
           overId = closestCorners({
             ...args,
             droppableContainers: args.droppableContainers.filter(
               (container) => container.id !== overId && checkColumn?.cardOrderIds?.includes(container.id)
             )
           })[0]?.id
-          console.log('overId after: ', overId)
         }
 
         lastOverId.current = overId
