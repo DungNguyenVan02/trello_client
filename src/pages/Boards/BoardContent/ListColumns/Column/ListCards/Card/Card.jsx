@@ -21,7 +21,8 @@ const Card = ({ card }) => {
   const dndKitCardStyle = {
     transform: CSS.Translate.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1
+    opacity: isDragging ? 0.5 : 1,
+    border: isDragging ? '1px solid #1976d2' : undefined
   }
 
   return (
