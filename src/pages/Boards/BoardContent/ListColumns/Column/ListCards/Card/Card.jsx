@@ -9,7 +9,7 @@ import { CSS } from '@dnd-kit/utilities'
 
 const Card = ({ card }) => {
   const shouldShowCardActions = () => {
-    return !!card?.memberIds.length || !!card.comments.length || !!card.attachments.length
+    return !!card?.memberIds?.length || !!card.comments?.length || !!card.attachments?.length
   }
 
   // Sort and drag
@@ -31,7 +31,12 @@ const Card = ({ card }) => {
       style={dndKitCardStyle}
       {...attributes}
       {...listeners}
-      sx={{ cursor: 'pointer', boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)', overflow: 'unset' }}
+      sx={{
+        cursor: 'pointer',
+        boxShadow: '0 1px 1px rgba(0, 0, 0, 0.2)',
+        overflow: 'unset',
+        display: card?.FE_PlaceholderCard ? 'none' : 'block'
+      }}
     >
       {card?.cover && <CardMedia sx={{ height: 140 }} image={card.cover} title={card.title} />}
       <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
