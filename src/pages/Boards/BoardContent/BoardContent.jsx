@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Box } from '@mui/material'
 import ListColumns from './ListColumns/ListColumns'
 import { mapOrder } from '~/utils/sort'
@@ -13,7 +13,9 @@ import {
   useSensors,
   DragOverlay,
   defaultDropAnimationSideEffects,
-  closestCorners
+  closestCorners,
+  pointerWithin,
+  getFirstCollision
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 
@@ -26,6 +28,8 @@ const BoardContent = ({ board }) => {
   const [activeDragItemType, setActiveDragItemType] = useState(null)
   const [activeDragItemData, setActiveDragItemData] = useState(null)
   const [oldColumnDraggingCard, setOldColumnDraggingCard] = useState(null)
+
+  const lastOverId = useRef(null)
 
   const ACTIVE_DRAG_ITEM = useMemo(
     () => ({
@@ -203,9 +207,47 @@ const BoardContent = ({ board }) => {
     sideEffects: defaultDropAnimationSideEffects({ styles: { active: { opacity: 0.5 } } })
   }
 
+  const collisionDetectionStrategy = useCallback(
+    (args) => {
+      if (activeDragItemType === ACTIVE_DRAG_ITEM.COlUMN) {
+        return closestCorners({ ...args })
+      }
+
+      // Tìm các điểm va chạm với các điểm
+      const pointerIntersections = pointerWithin(args)
+
+      // Thuật toán phát hiện va chạm, nếu không phát hiện va chạm thì không làm gì cả
+      if (!pointerIntersections?.length) return
+
+      // Tìm overId đầu tiên trong pointerIntersections trên
+      let overId = getFirstCollision(pointerIntersections, 'id')
+
+      if (overId) {
+        const checkColumn = orderedColumns.find((column) => column._id === overId)
+
+        if (checkColumn) {
+          console.log('overId before: ', overId)
+          overId = closestCorners({
+            ...args,
+            droppableContainers: args.droppableContainers.filter(
+              (container) => container.id !== overId && checkColumn?.cardOrderIds?.includes(container.id)
+            )
+          })[0]?.id
+          console.log('overId after: ', overId)
+        }
+
+        lastOverId.current = overId
+        return [{ id: overId }]
+      }
+      return lastOverId.current ? [{ id: lastOverId.current }] : []
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeDragItemType, orderedColumns]
+  )
+
   return (
     <DndContext
-      collisionDetection={closestCorners}
+      collisionDetection={collisionDetectionStrategy}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
