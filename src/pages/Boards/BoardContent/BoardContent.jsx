@@ -56,7 +56,7 @@ const BoardContent = ({ board }) => {
   const sensors = useSensors(mouseSensor, touchSensor)
 
   useEffect(() => {
-    setOrderColumns(mapOrder(board?.columns, board.columnOrderIds, '_id'))
+    setOrderColumns(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
   }, [board])
 
   const findColumnByCardId = (cardId) => {
@@ -95,7 +95,6 @@ const BoardContent = ({ board }) => {
         // Thêm placeholder card giữ chỗ
         if (isEmpty(nextActiveColumn.cards)) {
           nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
-          console.log(nextActiveColumn.cards)
         }
 
         // Cập nhật lại cardOrderIds
@@ -120,8 +119,6 @@ const BoardContent = ({ board }) => {
         // Cập nhật lại cardOrderIds
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map((c) => c._id)
       }
-
-      console.log(nextColumns)
 
       return nextColumns
     })
