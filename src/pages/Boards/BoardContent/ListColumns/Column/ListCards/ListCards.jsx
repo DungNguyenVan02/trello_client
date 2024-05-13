@@ -20,8 +20,8 @@ const ListCards = ({ cards }) => {
                   ${theme.trello.columnHeaderHeight} - 
                   ${theme.trello.columnFooterHeight})
                 `,
-          '&::-webkit-scrollbar': { width: '8px', height: '8px' },
-          '&::-webkit-scrollbar-thumb': { backgroundColor: '#ced0da', borderRadius: '8px' }
+          '&::-webkit-scrollbar-thumb': { backgroundColor: '#ced0da', borderRadius: '8px' },
+          '&::-webkit-scrollbar-thumb:hover': { backgroundColor: '#bfc2cf' }
         }}
       >
         {cards.map((card) => (

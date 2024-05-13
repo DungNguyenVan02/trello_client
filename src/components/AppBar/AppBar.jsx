@@ -69,7 +69,7 @@ const AppBar = () => {
                 </InputAdornment>
               ),
               endAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position="end">
                   {searchValue && (
                     <CloseIcon
                       onClick={() => setSearchValue('')}
