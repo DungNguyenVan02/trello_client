@@ -21,7 +21,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatter'
 
-const BoardContent = ({ board, createNewColumn, createNewCard }) => {
+const BoardContent = ({ board, createNewColumn, createNewCard, moveColumn }) => {
   const [orderedColumns, setOrderColumns] = useState([])
 
   const [activeDragItemId, setActiveDragItemId] = useState(null)
@@ -202,7 +202,7 @@ const BoardContent = ({ board, createNewColumn, createNewCard }) => {
         const oldColumnIndex = orderedColumns.findIndex((c) => c._id === active.id)
         const newColumnIndex = orderedColumns.findIndex((c) => c._id === over.id)
         const dndOrderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
-        // const dndOrderedColumnsIds =dndOrderedColumns.map(c => c._id)
+        moveColumn(dndOrderedColumns)
         setOrderColumns(dndOrderedColumns)
       }
     }
