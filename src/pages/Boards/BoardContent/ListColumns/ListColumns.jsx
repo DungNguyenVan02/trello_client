@@ -8,18 +8,25 @@ import AddIcon from '@mui/icons-material/Add'
 
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 
-const ListColumns = ({ columns }) => {
+const ListColumns = ({ columns, createNewColumn, createNewCard }) => {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const [validTitle, setValidTitle] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
 
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
 
-  const addNewColumnTitle = () => {
+  const resetData = () => {
+    setNewColumnTitle('')
+    toggleOpenNewColumnForm()
+  }
+
+  const addNewColumnTitle = async () => {
     if (!newColumnTitle) {
       setValidTitle(true)
       return
     }
+    await createNewColumn({ title: newColumnTitle })
+    resetData()
   }
 
   return (
@@ -36,7 +43,7 @@ const ListColumns = ({ columns }) => {
         }}
       >
         {columns?.map?.((column) => (
-          <Column key={column._id} column={column} />
+          <Column key={column._id} column={column} createNewCard={createNewCard} />
         ))}
 
         <Box
@@ -133,8 +140,7 @@ const ListColumns = ({ columns }) => {
                 <Button
                   onClick={() => {
                     setValidTitle(false)
-                    setNewColumnTitle('')
-                    toggleOpenNewColumnForm()
+                    resetData()
                   }}
                   variant="contained"
                   size="small"
