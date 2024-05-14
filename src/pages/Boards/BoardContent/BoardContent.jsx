@@ -21,7 +21,7 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatter'
 
-const BoardContent = ({ board }) => {
+const BoardContent = ({ board, createNewColumn, createNewCard }) => {
   const [orderedColumns, setOrderColumns] = useState([])
 
   const [activeDragItemId, setActiveDragItemId] = useState(null)
@@ -269,7 +269,7 @@ const BoardContent = ({ board }) => {
           p: '10px 0'
         }}
       >
-        <ListColumns columns={orderedColumns} />
+        <ListColumns columns={orderedColumns} createNewColumn={createNewColumn} createNewCard={createNewCard} />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
           {activeDragItemType === ACTIVE_DRAG_ITEM.COlUMN && <Column column={activeDragItemData} />}

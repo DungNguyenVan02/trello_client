@@ -25,18 +25,21 @@ import { mapOrder } from '~/utils/sort'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 
-const Column = ({ column }) => {
+const Column = ({ column, createNewCard }) => {
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [validTitle, setValidTitle] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('')
 
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
 
-  const addNewColumnTitle = () => {
+  const addNewCardTitle = async () => {
     if (!newCardTitle) {
       setValidTitle(true)
       return
     }
+    await createNewCard({ title: newCardTitle, columnId: column._id })
+    toggleOpenNewCardForm()
+    setNewCardTitle('')
   }
 
   // Open & close menu
@@ -166,7 +169,7 @@ const Column = ({ column }) => {
           }}
         >
           {openNewCardForm ? (
-            <Box sx={{ height: '100%', display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box data-no-dnd="true" sx={{ height: '100%', display: 'flex', alignItems: 'center', gap: 1 }}>
               <TextField
                 data-no-dnd="true"
                 id="outlined-search"
@@ -207,8 +210,7 @@ const Column = ({ column }) => {
               />
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Button
-                  data-no-dnd="true"
-                  onClick={addNewColumnTitle}
+                  onClick={addNewCardTitle}
                   variant="contained"
                   color="success"
                   size="small"
@@ -224,6 +226,7 @@ const Column = ({ column }) => {
                   Add
                 </Button>
                 <ExitToAppOutlinedIcon
+                  onClick={toggleOpenNewCardForm}
                   fontSize="small"
                   sx={{ color: (theme) => theme.palette.warning.main, cursor: 'pointer' }}
                 />
