@@ -24,6 +24,7 @@ import { mapOrder } from '~/utils/sort'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { toast } from 'react-toastify'
 
 const Column = ({ column, createNewCard }) => {
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
@@ -32,12 +33,13 @@ const Column = ({ column, createNewCard }) => {
 
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
 
-  const addNewCardTitle = async () => {
-    if (!newCardTitle) {
+  const addNewCardTitle = () => {
+    if (!newCardTitle || newCardTitle.length < 3) {
       setValidTitle(true)
+      toast.warning('hi hi')
       return
     }
-    await createNewCard({ title: newCardTitle, columnId: column._id })
+    createNewCard({ title: newCardTitle, columnId: column._id })
     toggleOpenNewCardForm()
     setNewCardTitle('')
   }
@@ -65,7 +67,6 @@ const Column = ({ column, createNewCard }) => {
     opacity: isDragging ? 0.5 : 1
   }
 
-  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
   return (
     <div ref={setNodeRef} style={dndKitColumnStyle} {...attributes}>
       <Box
@@ -99,7 +100,7 @@ const Column = ({ column, createNewCard }) => {
           >
             {column.title}
           </Typography>
-          <Box>
+          <Box data-no-dnd="true">
             <Tooltip title="More option">
               <ExpandMoreIcon
                 id="basic-column-dropdown"
@@ -160,7 +161,7 @@ const Column = ({ column, createNewCard }) => {
           </Box>
         </Box>
 
-        <ListCards cards={orderedCards} />
+        <ListCards cards={column.cards} />
 
         <Box
           sx={{

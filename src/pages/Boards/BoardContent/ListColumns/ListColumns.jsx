@@ -7,6 +7,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import AddIcon from '@mui/icons-material/Add'
 
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
+import { toast } from 'react-toastify'
 
 const ListColumns = ({ columns, createNewColumn, createNewCard }) => {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
@@ -20,12 +21,13 @@ const ListColumns = ({ columns, createNewColumn, createNewCard }) => {
     toggleOpenNewColumnForm()
   }
 
-  const addNewColumnTitle = async () => {
-    if (!newColumnTitle) {
+  const addNewColumnTitle = () => {
+    if (!newColumnTitle || newColumnTitle.length < 3) {
       setValidTitle(true)
+      toast.warning('hi hi')
       return
     }
-    await createNewColumn({ title: newColumnTitle })
+    createNewColumn({ title: newColumnTitle })
     resetData()
   }
 

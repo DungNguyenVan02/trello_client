@@ -7,3 +7,11 @@ export const createColumnAPI = (data) => {
     data
   })
 }
+
+export const updateColumnAPI = (id, data) => {
+  return axios({
+    url: '/columns/' + id,
+    method: 'PUT',
+    data
+  })
+}
