@@ -14,3 +14,11 @@ export const updateBoarDetailsAPI = async (boardId, data) => {
     data
   })
 }
+
+export const moveCardToDifferentColumnAPI = async (data) => {
+  return axios({
+    url: '/boards/supports/moving_card',
+    method: 'PUT',
+    data
+  })
+}

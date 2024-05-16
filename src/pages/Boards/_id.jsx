@@ -5,7 +5,7 @@ import BoardBar from './BoardBar/BoardBar'
 import BoardContent from './BoardContent/BoardContent'
 import CircularProgress from '@mui/material/CircularProgress'
 // import { mockData } from '~/apis/mock-data'
-import { fetchBoarDetailsAPI, updateBoarDetailsAPI } from '~/apis'
+import { fetchBoarDetailsAPI, moveCardToDifferentColumnAPI, updateBoarDetailsAPI } from '~/apis'
 import { createColumnAPI, updateColumnAPI } from '~/apis/columnAPI'
 import { createCardAPI } from '~/apis/cardAPI'
 
@@ -56,9 +56,15 @@ const Board = () => {
       const newBoard = { ...board }
       const columnToUpdate = newBoard.columns.find((column) => column._id === newCardData.columnId)
       if (columnToUpdate) {
-        columnToUpdate.cards.push(response)
-        columnToUpdate.cardOrderIds.push(response._id)
+        if (columnToUpdate.cards.some((card) => card.FE_PlaceholderCard)) {
+          columnToUpdate.cards = [response]
+          columnToUpdate.cardOrderIds = [response._id]
+        } else {
+          columnToUpdate.cards.push(response)
+          columnToUpdate.cardOrderIds.push(response._id)
+        }
       }
+
       setBoard(newBoard)
     }
   }
@@ -82,6 +88,28 @@ const Board = () => {
     }
 
     updateColumnAPI(columnId, { cardOrderIds: dndOrderedCardIds })
+  }
+
+  const moveCardToDifferentColumn = (currentCardId, prevColumnId, nextColumnId, dndOrderedColumns) => {
+    const dndOrderedColumnsIds = dndOrderedColumns.map((c) => c._id)
+    const newBoard = { ...board }
+    newBoard.columns = dndOrderedColumns
+    newBoard.columnOrderIds = dndOrderedColumnsIds
+    setBoard(newBoard)
+
+    let prevCardOrderIds = dndOrderedColumns.find((c) => c._id === prevColumnId)?.cardOrderIds || []
+
+    if (prevCardOrderIds[0].includes('placeholder')) {
+      prevCardOrderIds = []
+    }
+
+    moveCardToDifferentColumnAPI({
+      currentCardId,
+      prevColumnId,
+      prevCardOrderIds,
+      nextColumnId,
+      nextCardOrderIds: dndOrderedColumns.find((c) => c._id === nextColumnId)?.cardOrderIds
+    })
   }
 
   if (!board) {
@@ -112,6 +140,7 @@ const Board = () => {
         createNewCard={createNewCard}
         moveColumn={moveColumn}
         moveCardInTheSameColumn={moveCardInTheSameColumn}
+        moveCardToDifferentColumn={moveCardToDifferentColumn}
       />
     </Container>
   )
