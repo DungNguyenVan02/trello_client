@@ -21,7 +21,14 @@ import { arrayMove } from '@dnd-kit/sortable'
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatter'
 
-const BoardContent = ({ board, createNewColumn, createNewCard, moveColumn, moveCardInTheSameColumn }) => {
+const BoardContent = ({
+  board,
+  createNewColumn,
+  createNewCard,
+  moveColumn,
+  moveCardInTheSameColumn,
+  moveCardToDifferentColumn
+}) => {
   const [orderedColumns, setOrderColumns] = useState([])
 
   const [activeDragItemId, setActiveDragItemId] = useState(null)
@@ -68,7 +75,8 @@ const BoardContent = ({ board, createNewColumn, createNewCard, moveColumn, moveC
     active,
     over,
     activeColumn,
-    activeDraggingCardData
+    activeDraggingCardData,
+    triggerFrom
   ) => {
     setOrderColumns((prevColumn) => {
       // Tìm vị trí của overCard trong column acitveCard sắp thả vào
@@ -119,6 +127,12 @@ const BoardContent = ({ board, createNewColumn, createNewCard, moveColumn, moveC
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map((c) => c._id)
       }
 
+      if (triggerFrom === 'handleDragEnd') {
+        // 1. cập nhật cardOrderIds của column cũ
+        // 2. Cập nhật cardOrderIds của column mới
+        // 3. Cập nhật lại columnId ở card đã kéo
+        moveCardToDifferentColumn(active.id, oldColumnDraggingCard._id, nextOverColumn._id, nextColumns)
+      }
       return nextColumns
     })
   }
@@ -153,7 +167,15 @@ const BoardContent = ({ board, createNewColumn, createNewCard, moveColumn, moveC
 
     // Chỉ xử lý khi kéo card qua lại giữa 2 column khác nhau
     if (activeColumn._id !== overColumn._id) {
-      moveCardBetweenDifferentColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardData)
+      moveCardBetweenDifferentColumns(
+        overColumn,
+        overCardId,
+        active,
+        over,
+        activeColumn,
+        activeDraggingCardData,
+        'handleDragOver'
+      )
     }
   }
 
@@ -176,7 +198,15 @@ const BoardContent = ({ board, createNewColumn, createNewCard, moveColumn, moveC
 
       if (oldColumnDraggingCard._id !== overColumn._id) {
         // Xử lý kéo thả card giữa 2 column khác nhau
-        moveCardBetweenDifferentColumns(overColumn, overCardId, active, over, activeColumn, activeDraggingCardData)
+        moveCardBetweenDifferentColumns(
+          overColumn,
+          overCardId,
+          active,
+          over,
+          activeColumn,
+          activeDraggingCardData,
+          'handleDragEnd'
+        )
       } else {
         // Xử lý kéo thả card trong cùng 1 column
         const oldCardIndex = oldColumnDraggingCard?.cards?.findIndex((c) => c._id === activeDragItemId)
