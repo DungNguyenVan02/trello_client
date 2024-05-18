@@ -9,7 +9,7 @@ import AddIcon from '@mui/icons-material/Add'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
 
-const ListColumns = ({ columns, createNewColumn, createNewCard }) => {
+const ListColumns = ({ columns, createNewColumn, createNewCard, softDeleteColumnDetails }) => {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const [validTitle, setValidTitle] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
@@ -45,7 +45,12 @@ const ListColumns = ({ columns, createNewColumn, createNewCard }) => {
         }}
       >
         {columns?.map?.((column) => (
-          <Column key={column._id} column={column} createNewCard={createNewCard} />
+          <Column
+            key={column._id}
+            column={column}
+            createNewCard={createNewCard}
+            softDeleteColumnDetails={softDeleteColumnDetails}
+          />
         ))}
 
         <Box
