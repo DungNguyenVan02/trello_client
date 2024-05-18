@@ -6,12 +6,13 @@ import BoardContent from './BoardContent/BoardContent'
 import CircularProgress from '@mui/material/CircularProgress'
 // import { mockData } from '~/apis/mock-data'
 import { fetchBoarDetailsAPI, moveCardToDifferentColumnAPI, updateBoarDetailsAPI } from '~/apis'
-import { createColumnAPI, updateColumnAPI } from '~/apis/columnAPI'
+import { createColumnAPI, deleteColumnAPI, updateColumnAPI } from '~/apis/columnAPI'
 import { createCardAPI } from '~/apis/cardAPI'
 
 import { generatePlaceholderCard } from '~/utils/formatter'
 import { isEmpty } from 'lodash'
 import { mapOrder } from '~/utils/sort'
+import { toast } from 'react-toastify'
 
 const Board = () => {
   const [board, setBoard] = useState(null)
@@ -112,6 +113,19 @@ const Board = () => {
     })
   }
 
+  // Xóa column
+  const softDeleteColumnDetails = async (columnId) => {
+    const response = await deleteColumnAPI(columnId)
+    if (response?.deleteMes) {
+      const newBoard = { ...board }
+      newBoard.columns = newBoard.columns.filter((column) => column._id !== columnId)
+      newBoard.columnOrderIds = newBoard.columnOrderIds.filter((_id) => _id !== columnId)
+      setBoard(newBoard)
+
+      toast.success(response?.deleteMes)
+    }
+  }
+
   if (!board) {
     return (
       <Box
@@ -141,6 +155,7 @@ const Board = () => {
         moveColumn={moveColumn}
         moveCardInTheSameColumn={moveCardInTheSameColumn}
         moveCardToDifferentColumn={moveCardToDifferentColumn}
+        softDeleteColumnDetails={softDeleteColumnDetails}
       />
     </Container>
   )

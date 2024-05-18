@@ -15,3 +15,10 @@ export const updateColumnAPI = (id, data) => {
     data
   })
 }
+
+export const deleteColumnAPI = (id) => {
+  return axios({
+    url: '/columns/' + id,
+    method: 'DELETE'
+  })
+}

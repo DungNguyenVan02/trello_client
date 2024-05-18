@@ -27,7 +27,8 @@ const BoardContent = ({
   createNewCard,
   moveColumn,
   moveCardInTheSameColumn,
-  moveCardToDifferentColumn
+  moveCardToDifferentColumn,
+  softDeleteColumnDetails
 }) => {
   const [orderedColumns, setOrderColumns] = useState([])
 
@@ -302,7 +303,12 @@ const BoardContent = ({
           p: '10px 0'
         }}
       >
-        <ListColumns columns={orderedColumns} createNewColumn={createNewColumn} createNewCard={createNewCard} />
+        <ListColumns
+          columns={orderedColumns}
+          createNewColumn={createNewColumn}
+          createNewCard={createNewCard}
+          softDeleteColumnDetails={softDeleteColumnDetails}
+        />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
           {activeDragItemType === ACTIVE_DRAG_ITEM.COlUMN && <Column column={activeDragItemData} />}
