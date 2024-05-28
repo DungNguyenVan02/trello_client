@@ -1,66 +1,20 @@
-import { Avatar, AvatarGroup, Box, Button, Chip, Tooltip } from '@mui/material'
-import DashboardIcon from '@mui/icons-material/Dashboard'
-import VpnLockIcon from '@mui/icons-material/VpnLock'
-import AddToDriveIcon from '@mui/icons-material/AddToDrive'
-import BoltIcon from '@mui/icons-material/Bolt'
-import FilterListIcon from '@mui/icons-material/FilterList'
-import PersonAddIcon from '@mui/icons-material/PersonAdd'
-import PublicIcon from '@mui/icons-material/Public'
-import { capitalizeFirstLetter } from '~/utils/formatter'
+import { Avatar, AvatarGroup, Box, IconButton, Stack, Tooltip, Typography } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import Activity from './Activity/Activity'
+import Description from './Description/Description'
 
-const MENU_STYLES = {
-  color: '#fff',
-  bgcolor: 'rgba(255, 255, 255, 0.2)',
-  border: 'none',
-  borderRadius: '5px',
-  px: '5px',
-  '.MuiSvgIcon-root': { color: '#fff' },
-  '&:hover': { bgcolor: 'rgba(255, 255, 255, 0.3)' }
-}
-
-const BoardBar = ({ board }) => {
+const ContainerLeft = () => {
   return (
-    <Box
-      sx={{
-        height: (theme) => theme.trello.boardBarHeight,
-        bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
-        px: 2
-      }}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 2,
-          justifyContent: 'space-between',
-          height: '100%',
-          bgcolor: 'inherit',
-          overflowX: 'auto'
-        }}
-      >
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Chip clickable icon={<DashboardIcon />} label={board?.title} sx={MENU_STYLES} />
-          <Chip
-            clickable
-            icon={board?.type === 'public' ? <PublicIcon /> : <VpnLockIcon />}
-            label={capitalizeFirstLetter(board?.type)}
-            sx={MENU_STYLES}
-          />
-          <Chip clickable icon={<AddToDriveIcon />} label="Add To Google Driver" sx={MENU_STYLES} />
-          <Chip clickable icon={<BoltIcon />} label="Automation" sx={MENU_STYLES} />
-          <Chip clickable icon={<FilterListIcon />} label="Filter" sx={MENU_STYLES} />
-        </Box>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <Button
-            startIcon={<PersonAddIcon />}
-            variant="outlined"
-            sx={{ color: '#fff', '&.MuiButton-outlined': { borderColor: '#fff' } }}
-          >
-            Invite
-          </Button>
+    <Stack gap={1}>
+      <Box>
+        <Typography variant="span" sx={{ color: 'info.dark' }}>
+          Members
+        </Typography>
+        <Box sx={{ p: '6px 0 24px', display: 'flex', gap: '4px', alignItems: 'center' }}>
           <AvatarGroup
             max={7}
             sx={{
+              justifyContent: 'flex-end',
               '& .MuiAvatar-root': {
                 width: 34,
                 height: 34,
@@ -114,10 +68,17 @@ const BoardBar = ({ board }) => {
               />
             </Tooltip>
           </AvatarGroup>
+          <Tooltip title="Add members">
+            <IconButton size="small" sx={{ border: '1px solid #ccc' }}>
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
         </Box>
       </Box>
-    </Box>
+      <Description />
+      <Activity />
+    </Stack>
   )
 }
 
-export default BoardBar
+export default ContainerLeft
