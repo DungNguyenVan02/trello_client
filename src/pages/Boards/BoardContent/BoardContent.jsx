@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Box } from '@mui/material'
 import ListColumns from './ListColumns/ListColumns'
-import { mapOrder } from '~/utils/sort'
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 
