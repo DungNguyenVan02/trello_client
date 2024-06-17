@@ -24,7 +24,7 @@ const Profiles = () => {
         >
           <Avatar
             sx={{ width: 36, height: 36 }}
-            src="https://scontent.fhan14-4.fna.fbcdn.net/v/t39.30808-6/428438255_1531563720956716_2440216351938270340_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=icdX3n4G56gQ7kNvgF1FTfq&_nc_oc=AdiCMn2V3b0qda1iFqvz_8KCIv_NqgUqjojMD5gqY7BCnG46DN8rYSwxTdSjk62UUQg&_nc_ht=scontent.fhan14-4.fna&oh=00_AYCVA8BLzTxsMvLF6o4KG1LZL5N1y05mEYAQWUwbpqdWuQ&oe=6652FD65"
+            src="https://dungnguyenvan02.github.io/CV/assets/image/avatar.jpg"
             alt="DungNguyen"
           >
             D

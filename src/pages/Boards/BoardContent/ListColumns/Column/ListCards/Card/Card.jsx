@@ -26,9 +26,33 @@ import { CSS } from '@dnd-kit/utilities'
 import { useState } from 'react'
 import ModalBasic from '~/components/Modal/Modal'
 import CardDetail from './CardDetail/CardDetail'
+import { useConfirm } from 'material-ui-confirm'
+import { useDispatch } from 'react-redux'
+import { deleteCard } from '~/redux/slices/boardSlice'
+import { deleteCardAPI } from '~/apis/cardAPI'
 
-const Card = ({ card }) => {
+const Card = ({ card, columnId }) => {
+  const dispatch = useDispatch()
   const [openDetail, setOpenDetail] = useState(false)
+
+  const confirmDeleteColumn = useConfirm()
+  const handleDeleteCard = () => {
+    confirmDeleteColumn({
+      title: 'Delete card?',
+      description: 'This action will delete your card! Are you sure?',
+      confirmationText: 'Confirm',
+      cancellationText: 'Cancel'
+    })
+      .then(() => {
+        dispatch(deleteCard({ columnId, cardId: card._id }))
+        deleteCardAPI(columnId, card._id)
+        // softDeleteColumnDetails(column._id)
+        // dispatch(fetchSoftDeleteColumnDetails({ columnId: column._id, boardUpdate: boardData }))
+      })
+      .catch(() => {
+        /* ... */
+      })
+  }
 
   // Open & close menu
   const [anchorEl, setAnchorEl] = useState(null)
@@ -164,7 +188,7 @@ const Card = ({ card }) => {
                 <ListItemIcon>
                   <DeleteForeverIcon className="delete-forever-icon" fontSize="small" />
                 </ListItemIcon>
-                <ListItemText>Delete this column</ListItemText>
+                <ListItemText onClick={handleDeleteCard}>Delete card this column</ListItemText>
               </MenuItem>
             </Menu>
           </Box>

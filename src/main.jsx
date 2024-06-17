@@ -7,8 +7,10 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 import { ConfirmProvider } from 'material-ui-confirm'
 // Router dom
 import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 import theme from './theme'
+import store from './redux/store.js'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
@@ -23,7 +25,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
           cancellationButtonProps: { color: 'inherit' }
         }}
       >
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
         <ToastContainer position="bottom-left" theme="colored" />
       </ConfirmProvider>
     </BrowserRouter>

@@ -7,3 +7,10 @@ export const createCardAPI = (data) => {
     data
   })
 }
+
+export const deleteCardAPI = (columnId, cardId) => {
+  return axios({
+    url: `/cards/${columnId}/${cardId}`,
+    method: 'DELETE'
+  })
+}
