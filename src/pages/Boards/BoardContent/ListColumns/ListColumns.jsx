@@ -8,8 +8,12 @@ import AddIcon from '@mui/icons-material/Add'
 
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 import { toast } from 'react-toastify'
+import { createColumnAPI } from '~/apis/columnAPI'
+import { useDispatch } from 'react-redux'
+import { createColumn } from '~/redux/slices/boardSlice'
 
-const ListColumns = ({ columns, createNewColumn, createNewCard, softDeleteColumnDetails }) => {
+const ListColumns = ({ columns }) => {
+  const dispatch = useDispatch()
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const [validTitle, setValidTitle] = useState(false)
   const [newColumnTitle, setNewColumnTitle] = useState('')
@@ -19,6 +23,13 @@ const ListColumns = ({ columns, createNewColumn, createNewCard, softDeleteColumn
   const resetData = () => {
     setNewColumnTitle('')
     toggleOpenNewColumnForm()
+  }
+
+  const createNewColumn = async (newColumnData) => {
+    const response = await createColumnAPI({ ...newColumnData, boardId: '6641a4fb094b3ddfccd1a76f' })
+    if (response) {
+      dispatch(createColumn(response))
+    }
   }
 
   const addNewColumnTitle = () => {
@@ -44,13 +55,8 @@ const ListColumns = ({ columns, createNewColumn, createNewCard, softDeleteColumn
           '&::-webkit-scrollbar-track': { m: 2 }
         }}
       >
-        {columns?.map?.((column) => (
-          <Column
-            key={column._id}
-            column={column}
-            createNewCard={createNewCard}
-            softDeleteColumnDetails={softDeleteColumnDetails}
-          />
+        {columns?.map((column) => (
+          <Column key={column._id} column={column} />
         ))}
 
         <Box

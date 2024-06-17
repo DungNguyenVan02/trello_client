@@ -25,13 +25,27 @@ import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { toast } from 'react-toastify'
 import { useConfirm } from 'material-ui-confirm'
+import { createCardAPI } from '~/apis/cardAPI'
+import { createCard } from '~/redux/slices/boardSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchSoftDeleteColumnDetails } from '~/redux/asyncActions/boardActions/boardActions'
+import { boardSelector } from '~/redux/selector/selector'
 
-const Column = ({ column, createNewCard, softDeleteColumnDetails }) => {
+const Column = ({ column }) => {
+  const dispatch = useDispatch()
+  const { boardData } = useSelector(boardSelector)
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const [validTitle, setValidTitle] = useState(false)
   const [newCardTitle, setNewCardTitle] = useState('')
 
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
+
+  const createNewCard = async (newCardData) => {
+    const response = await createCardAPI({ ...newCardData, boardId: '6641a4fb094b3ddfccd1a76f' })
+    if (response) {
+      dispatch(createCard(response))
+    }
+  }
 
   const addNewCardTitle = () => {
     if (!newCardTitle || newCardTitle.length < 3) {
@@ -48,12 +62,13 @@ const Column = ({ column, createNewCard, softDeleteColumnDetails }) => {
   const handleDeleteColumn = () => {
     confirmDeleteColumn({
       title: 'Delete column?',
-      description: 'This action wil permanently delete your Column and its Card! Are you sure?',
+      description: 'This action will delete your Column and its Card! Are you sure?',
       confirmationText: 'Confirm',
       cancellationText: 'Cancel'
     })
       .then(() => {
-        softDeleteColumnDetails(column._id)
+        // softDeleteColumnDetails(column._id)
+        dispatch(fetchSoftDeleteColumnDetails({ columnId: column._id, boardUpdate: boardData }))
       })
       .catch(() => {
         /* ... */
@@ -186,7 +201,7 @@ const Column = ({ column, createNewCard, softDeleteColumnDetails }) => {
           </Box>
         </Box>
 
-        <ListCards cards={column.cards} />
+        <ListCards cards={column.cards} columnId={column._id} />
 
         <Box
           sx={{

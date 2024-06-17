@@ -19,17 +19,16 @@ import { arrayMove } from '@dnd-kit/sortable'
 
 import { cloneDeep, isEmpty } from 'lodash'
 import { generatePlaceholderCard } from '~/utils/formatter'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchMoveCardToDifferentColumn, fetchUpdateBoarDetails } from '~/redux/asyncActions/boardActions/boardActions'
+import { boardSelector } from '~/redux/selector/selector'
+import { updateColumnAPI } from '~/apis/columnAPI'
+import { moveCardInTheSameColumn } from '~/redux/slices/boardSlice'
 
-const BoardContent = ({
-  board,
-  createNewColumn,
-  createNewCard,
-  moveColumn,
-  moveCardInTheSameColumn,
-  moveCardToDifferentColumn,
-  softDeleteColumnDetails
-}) => {
-  const [orderedColumns, setOrderColumns] = useState([])
+const BoardContent = () => {
+  const dispatch = useDispatch()
+  const [orderedColumns, setOrderedColumns] = useState([])
+  const { boardData } = useSelector(boardSelector)
 
   const [activeDragItemId, setActiveDragItemId] = useState(null)
   const [activeDragItemType, setActiveDragItemType] = useState(null)
@@ -62,8 +61,8 @@ const BoardContent = ({
   const sensors = useSensors(mouseSensor, touchSensor)
 
   useEffect(() => {
-    setOrderColumns(board.columns)
-  }, [board])
+    setOrderedColumns(boardData?.columns)
+  }, [boardData])
 
   const findColumnByCardId = (cardId) => {
     return orderedColumns.find((column) => column?.cards?.map((card) => card._id)?.includes(cardId))
@@ -78,7 +77,7 @@ const BoardContent = ({
     activeDraggingCardData,
     triggerFrom
   ) => {
-    setOrderColumns((prevColumn) => {
+    setOrderedColumns((prevColumn) => {
       // Tìm vị trí của overCard trong column acitveCard sắp thả vào
       const overCardIndex = overColumn?.cards?.findIndex((c) => c._id === overCardId)
 
@@ -131,7 +130,32 @@ const BoardContent = ({
         // 1. cập nhật cardOrderIds của column cũ
         // 2. Cập nhật cardOrderIds của column mới
         // 3. Cập nhật lại columnId ở card đã kéo
-        moveCardToDifferentColumn(active.id, oldColumnDraggingCard._id, nextOverColumn._id, nextColumns)
+
+        // Lấy Id của column muốn thả card vào
+        const dndOrderedColumnsIds = nextColumns.map((c) => c._id)
+        const newBoard = { ...boardData }
+        newBoard.columns = nextColumns
+        newBoard.columnOrderIds = dndOrderedColumnsIds
+
+        // Lấy cardOrderIds của column cũ
+        let prevCardOrderIds = nextColumns.find((c) => c._id === oldColumnDraggingCard._id)?.cardOrderIds || []
+
+        // Nếu card được di chuyển ở column cũ là duy nhất thì xóa card ảo
+        if (prevCardOrderIds[0].includes('placeholder')) {
+          prevCardOrderIds = []
+        }
+        dispatch(
+          fetchMoveCardToDifferentColumn({
+            data: {
+              currentCardId: active.id,
+              prevColumnId: oldColumnDraggingCard._id,
+              prevCardOrderIds,
+              nextColumnId: nextOverColumn._id,
+              nextCardOrderIds: nextColumns.find((c) => c._id === nextOverColumn._id)?.cardOrderIds
+            },
+            boardUpdate: newBoard
+          })
+        )
       }
       return nextColumns
     })
@@ -214,7 +238,7 @@ const BoardContent = ({
 
         const dndOrderedCards = arrayMove(oldColumnDraggingCard?.cards, oldCardIndex, newCardIndex)
         const dndOrderedCardIds = dndOrderedCards.map((c) => c._id)
-        setOrderColumns((prevColumn) => {
+        setOrderedColumns((prevColumn) => {
           //  Clone mảng card cũ
           const nextColumns = cloneDeep(prevColumn)
 
@@ -226,7 +250,8 @@ const BoardContent = ({
           return nextColumns
         })
 
-        moveCardInTheSameColumn(dndOrderedCards, dndOrderedCardIds, oldColumnDraggingCard._id)
+        dispatch(moveCardInTheSameColumn({ dndOrderedCards, dndOrderedCardIds, columnId: oldColumnDraggingCard._id }))
+        updateColumnAPI(oldColumnDraggingCard._id, { cardOrderIds: dndOrderedCardIds })
       }
     }
 
@@ -235,8 +260,8 @@ const BoardContent = ({
         const oldColumnIndex = orderedColumns.findIndex((c) => c._id === active.id)
         const newColumnIndex = orderedColumns.findIndex((c) => c._id === over.id)
         const dndOrderedColumns = arrayMove(orderedColumns, oldColumnIndex, newColumnIndex)
-        setOrderColumns(dndOrderedColumns)
-        moveColumn(dndOrderedColumns)
+        setOrderedColumns(dndOrderedColumns)
+        dispatch(fetchUpdateBoarDetails({ dndOrderedColumns, boardData }))
       }
     }
 
@@ -302,12 +327,7 @@ const BoardContent = ({
           p: '10px 0'
         }}
       >
-        <ListColumns
-          columns={orderedColumns}
-          createNewColumn={createNewColumn}
-          createNewCard={createNewCard}
-          softDeleteColumnDetails={softDeleteColumnDetails}
-        />
+        <ListColumns columns={orderedColumns} />
         <DragOverlay dropAnimation={dropAnimation}>
           {!activeDragItemType && null}
           {activeDragItemType === ACTIVE_DRAG_ITEM.COlUMN && <Column column={activeDragItemData} />}

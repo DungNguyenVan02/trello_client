@@ -77,19 +77,19 @@ const BoardBar = ({ board }) => {
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
               <Avatar
                 alt="User"
-                src="https://scontent.fhan14-4.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AahN4CAdTzQQ7kNvgEr3-uU&_nc_ht=scontent.fhan14-4.fna&oh=00_AYC2KLCBYyqS__uSmUr-keQ28sZDmYVkEcOkDEnkKNBnMQ&oe=665277B4"
+                src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHeAFbgrYobHNGjE3EiOaxPxJgi1J6enC3EmCLUnp6cLVx4rhWPaEheyUNETuhnD7oM33T6T18QoD8MQ64Vi_7K&_nc_ohc=k5x5MQgjnnUQ7kNvgGwBHUg&_nc_ht=scontent.fhan20-1.fna&oh=00_AYDGfO9zaO0ACqg1vRpE1UbauZazW_vVaXMthZLYozXdqw&oe=66663E34"
               />
             </Tooltip>
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
               <Avatar
                 alt="User"
-                src="https://scontent.fhan14-2.fna.fbcdn.net/v/t39.30808-6/428407946_1531563727623382_7188920264786965131_n.jpg?stp=cp6_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=MzVZNOSYhKQQ7kNvgHhRfFD&_nc_ht=scontent.fhan14-2.fna&oh=00_AYDLza34aDMTgxIx-D14acvTVB_ZJwr6kfrlvZRGRT0qTA&oe=6652A4BE"
+                src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHeAFbgrYobHNGjE3EiOaxPxJgi1J6enC3EmCLUnp6cLVx4rhWPaEheyUNETuhnD7oM33T6T18QoD8MQ64Vi_7K&_nc_ohc=k5x5MQgjnnUQ7kNvgGwBHUg&_nc_ht=scontent.fhan20-1.fna&oh=00_AYDGfO9zaO0ACqg1vRpE1UbauZazW_vVaXMthZLYozXdqw&oe=66663E34"
               />
             </Tooltip>
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
               <Avatar
                 alt="User"
-                src="https://scontent.fhan14-2.fna.fbcdn.net/v/t39.30808-6/428407946_1531563727623382_7188920264786965131_n.jpg?stp=cp6_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=MzVZNOSYhKQQ7kNvgHhRfFD&_nc_ht=scontent.fhan14-2.fna&oh=00_AYDLza34aDMTgxIx-D14acvTVB_ZJwr6kfrlvZRGRT0qTA&oe=6652A4BE"
+                src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHeAFbgrYobHNGjE3EiOaxPxJgi1J6enC3EmCLUnp6cLVx4rhWPaEheyUNETuhnD7oM33T6T18QoD8MQ64Vi_7K&_nc_ohc=k5x5MQgjnnUQ7kNvgGwBHUg&_nc_ht=scontent.fhan20-1.fna&oh=00_AYDGfO9zaO0ACqg1vRpE1UbauZazW_vVaXMthZLYozXdqw&oe=66663E34"
               />
             </Tooltip>
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
@@ -98,20 +98,17 @@ const BoardBar = ({ board }) => {
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
               <Avatar
                 alt="User"
-                src="https://scontent.fhan14-4.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=AahN4CAdTzQQ7kNvgEr3-uU&_nc_ht=scontent.fhan14-4.fna&oh=00_AYC2KLCBYyqS__uSmUr-keQ28sZDmYVkEcOkDEnkKNBnMQ&oe=665277B4"
+                src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHeAFbgrYobHNGjE3EiOaxPxJgi1J6enC3EmCLUnp6cLVx4rhWPaEheyUNETuhnD7oM33T6T18QoD8MQ64Vi_7K&_nc_ohc=k5x5MQgjnnUQ7kNvgGwBHUg&_nc_ht=scontent.fhan20-1.fna&oh=00_AYDGfO9zaO0ACqg1vRpE1UbauZazW_vVaXMthZLYozXdqw&oe=66663E34"
               />
             </Tooltip>
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
               <Avatar
                 alt="User"
-                src="https://scontent.fhan14-2.fna.fbcdn.net/v/t39.30808-6/428407946_1531563727623382_7188920264786965131_n.jpg?stp=cp6_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=MzVZNOSYhKQQ7kNvgHhRfFD&_nc_ht=scontent.fhan14-2.fna&oh=00_AYDLza34aDMTgxIx-D14acvTVB_ZJwr6kfrlvZRGRT0qTA&oe=6652A4BE"
+                src="https://scontent.fhan20-1.fna.fbcdn.net/v/t39.30808-6/428119189_1531563780956710_4714055625246685310_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeHeAFbgrYobHNGjE3EiOaxPxJgi1J6enC3EmCLUnp6cLVx4rhWPaEheyUNETuhnD7oM33T6T18QoD8MQ64Vi_7K&_nc_ohc=k5x5MQgjnnUQ7kNvgGwBHUg&_nc_ht=scontent.fhan20-1.fna&oh=00_AYDGfO9zaO0ACqg1vRpE1UbauZazW_vVaXMthZLYozXdqw&oe=66663E34"
               />
             </Tooltip>
             <Tooltip title="User" sx={{ cursor: 'pointer' }}>
-              <Avatar
-                alt="User"
-                src="https://scontent.fhan14-2.fna.fbcdn.net/v/t39.30808-6/428407946_1531563727623382_7188920264786965131_n.jpg?stp=cp6_dst-jpg&_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=MzVZNOSYhKQQ7kNvgHhRfFD&_nc_ht=scontent.fhan14-2.fna&oh=00_AYDLza34aDMTgxIx-D14acvTVB_ZJwr6kfrlvZRGRT0qTA&oe=6652A4BE"
-              />
+              <Avatar alt="User" src="" />
             </Tooltip>
           </AvatarGroup>
         </Box>
